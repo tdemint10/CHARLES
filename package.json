@@ -1,0 +1,9 @@
+{
+  "name": "Charles_Server",
+  "version": "1.0.0",
+  "description": "server to handle things for Charles",
+  "dependencies": {
+    "express": "^4.16.3",
+    "socket.io": "^2.1.1"
+  }
+}
