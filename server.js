@@ -17,8 +17,11 @@ fs.readFile('credentials.json', (err, content) => {
   if (err) return console.log('Error loading client secret file: ', err)
 
   // authorize client
-  authorize(JSON.parse(content), listCategories)
+  authorize(JSON.parse(content), getCategories)
 })
+
+/* Global Variables */
+var budgetValues = {}
 
 /*----------------*/
 /* SERVER STARTUP */
@@ -89,24 +92,52 @@ function getNewToken(oAuth2Client, callback) {
 }
 
 /* LIST CATEGORIES */
-function listCategories(auth) {
+function getCategories(auth) {
   const sheets = google.sheets({version: 'v4', auth});
   sheets.spreadsheets.values.get({
-    spreadsheetId: '1wleu_BIwoIeHydWzW5zhxXNg80pFlGxY7y7gwV6lp9Y',
+    spreadsheetId: '1OBVXskxKNuiQyQR4zrYJszqmayR4fyRSJ5oPcw8iSbM',
     range: 'Budget!B5:E',
   }, (err, res) => {
     if (err) return console.log('The API returned an error: ' + err);
     const rows = res.data.values;
+    var category = 'WORK'
     if (rows.length) {
-      console.log('Category');
       // Print columns A and E, which correspond to indices 0 and 4.
       rows.map((row) => {
         if (row[0] && row[1]) {
-          console.log(`\t${row[0]} | ${row[1]} | ${row[2]} | ${row[3]}`)
+          var section = row[0]
+          if (section.includes('TOTAL')) {
+            budgetValues[section] = {
+              'projected': parseFloat(row[1].replace(',', '').replace('$', '')),
+              'actual': parseFloat(row[2].replace(',', '').replace('$', '')),
+              'difference': parseFloat(row[3].replace(',', '').replace('$', ''))
+            }
+          } else {
+            if (budgetValues[category]) {
+              budgetValues[category][section] = {
+                'projected': parseFloat(row[1].replace(',', '').replace('$', '')),
+                'actual': parseFloat(row[2].replace(',', '').replace('$', '')),
+                'difference': parseFloat(row[3].replace(',', '').replace('$', ''))
+              }
+            } else {
+              budgetValues[category] = {
+                section: {
+                  'projected': parseFloat(row[1].replace(',', '').replace('$', '')),
+                  'actual': parseFloat(row[2].replace(',', '').replace('$', '')),
+                  'difference': parseFloat(row[3].replace(',', '').replace('$', ''))
+                }
+              }
+            }
+          }
         } else if (row[0]) {
-          console.log(`${row[0]}`)
+          if (row[0] != 'INCOME' && row[0] != 'EXPENSES' && row[0] != 'SUMMARY') {
+            category = row[0]
+            budgetValues[category] = {}
+          }
+          // console.log(budgetValues)
         }
       });
+      console.log(budgetValues)
     } else {
       console.log('No data found.');
     }
