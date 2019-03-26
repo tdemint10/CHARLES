@@ -7,7 +7,7 @@
   "scripts": {
     "start:server": "cd backend && yarn start",
     "start:client": "cd client && yarn start",
-    "start:dev": "concurrently \"yarn start:server\" \"yarn start:client\""
+    "start": "concurrently \"yarn start:server\" \"yarn start:client\""
   },
   "eslintConfig": {
     "extends": "react-app"
