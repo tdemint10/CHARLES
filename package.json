@@ -5,9 +5,9 @@
     "concurrently": "^3.5.1"
   },
   "scripts": {
-    "start:server": "cd backend && yarn start",
-    "start:client": "cd client && yarn start",
-    "start:dev": "concurrently \"yarn start:server\" \"yarn start:client\""
+    "start:server": "cd backend && yarn install && yarn start",
+    "start:client": "cd client && yarn install yarn start",
+    "start:dev": "yarn install && concurrently \"yarn start:server\" \"yarn start:client\""
   },
   "eslintConfig": {
     "extends": "react-app"
