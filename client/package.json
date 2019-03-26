@@ -1,6 +1,7 @@
 {
   "name":"client",
   "version":"0.1.0",
+  "main": "app.js",
   "dependencies": {
     "bootstrap": "^4.3.1",
     "react": "^16.8.5",
@@ -9,7 +10,12 @@
     "react-scripts": "2.1.8"
   },
   "scripts": {
-    "start": "PORT=process.env.PORT && react-scripts start"
+    "startdeploy": "node app.js",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "postinstall": "react-scripts build"
   },
   "eslintConfig": {
     "extends": "react-app"
