@@ -23,7 +23,7 @@ app.get('/', (req, res) => {
 });
 
 /* SET PORT */
-const API_PORT = process.env.PORT || 3001;
+const API_PORT = 3001;
 
 /* LISTENER */
 app.listen(API_PORT, () => console.log(`Listening on port ${API_PORT}...`));

@@ -9,7 +9,7 @@
     "react-scripts": "2.1.8"
   },
   "scripts": {
-    "start": "react-scripts start"
+    "start": "PORT=process.env.PORT && react-scripts start"
   },
   "eslintConfig": {
     "extends": "react-app"
