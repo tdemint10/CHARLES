@@ -15,13 +15,13 @@ export default class DeleteTodo extends Component {
     axios.delete('http://localhost:3001/todos/' + this.props.match.params.id)
       .then(res => {
         this.setState({
-          delete_status: res.data.todo
+          delete_status: res.data
         });
       })
-      .catch(function (error) {
-        console.log(error);
+      .catch(error => {
+        console.log("ERROR: ", error);
         this.setState({
-          delete_status: "Delete unsuccessful"
+          delete_status: "Todo could not be deleted"
         });
       });
   }

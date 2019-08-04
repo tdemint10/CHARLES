@@ -64,12 +64,6 @@ export default class EditTodo extends Component {
   onSubmit(e) {
     e.preventDefault();
 
-    console.log(`Form submitted:`);
-    console.log(`Todo Name: ${this.state.todo_name}`);
-    console.log(`Todo Description: ${this.state.todo_description}`);
-    console.log(`Todo Category: ${this.state.todo_category}`);
-    console.log(`Todo Priority: ${this.state.todo_priority}`);
-
     const updatedTodo = {
       todo_name: this.state.todo_name,
       todo_description: this.state.todo_description,

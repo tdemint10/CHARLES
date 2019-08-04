@@ -9,10 +9,10 @@ const Todo = props => (
     <td>{props.todo.todo_category}</td>
     <td>{props.todo.todo_priority}</td>
     <td>
-      <Link to={"/edit/"+props.todo._id}>Edit</Link>
+      <Link to={"/edit/" + props.todo._id}>Edit</Link>
     </td>
     <td>
-      <Link to={"/delete/"+props.todo._id}>Delete</Link>
+      <Link to={"/delete/" + props.todo._id}>Delete</Link>
     </td>
   </tr>
 )
