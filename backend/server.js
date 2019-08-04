@@ -28,7 +28,6 @@ app.get('/', (req, res) => {
 
 /* TODO ROUTES */
 todoRoutes.route('/').get((req, res) => {
-  console.log('LIST')
   Todo.find((err, todos) => {
     if (err) {
       console.log(err);
@@ -49,11 +48,11 @@ todoRoutes.route('/:id').get((req, res) => {
   });
 });
 
-todoRoutes.route('/add').post((req, res) => {
+todoRoutes.route('/').post((req, res) => {
   let todo = new Todo(req.body);
   todo.save()
     .then(todo => {
-      res.status(200).json({'todo': 'todo added successfully'});
+      res.status(200).json(todo);
     })
     .catch(err => {
       res.status(400).send('adding new todo failed');
@@ -69,9 +68,20 @@ todoRoutes.route('/:id').delete((req, res) => {
       res.status(200).json({'todo': 'todo removed successfully'});
     } else {
       console.log(err);
-      res.status(400).json('removing todo failed');
+      res.status(400).send('removing todo failed');
     }
   });
+});
+
+todoRoutes.route('/:id').put((req, res) => {
+  let id = req.params.id;
+  Todo.findOneAndUpdate({_id: id}, req.body, (err, doc) => {
+    if (!err) {
+      res.status(200).json(doc);
+    } else {
+      res.status(400).send('update failed');
+    }
+  })
 });
 
 /* SET PORT */

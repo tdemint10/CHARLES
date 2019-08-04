@@ -14,7 +14,6 @@ class App extends Component {
           <h1>CHARLES</h1>
           <Link to="/">List Todos</Link><br/>
           <Link to="/create">Create Todo</Link><br/>
-          <Link to="/edit/:id">Edit Todo</Link><br/>
           <Route path="/" exact component={TodosList} />
           <Route path="/edit/:id" component={EditTodo} />
           <Route path="/create" component={CreateTodo} />

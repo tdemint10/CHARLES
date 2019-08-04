@@ -21,7 +21,7 @@ export default class DeleteTodo extends Component {
       .catch(function (error) {
         console.log(error);
         this.setState({
-          delete_status: 'Delete unsuccessful'
+          delete_status: "Delete unsuccessful"
         });
       });
   }

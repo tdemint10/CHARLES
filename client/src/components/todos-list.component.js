@@ -42,7 +42,6 @@ export default class TodosList extends Component {
   }
 
   render() {
-    console.log('LIST');
     return (
       <div>
         <h3>Todos List</h3>
