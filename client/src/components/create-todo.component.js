@@ -6,17 +6,25 @@ export default class CreateTodo extends Component {
   constructor(props) {
     super(props);
 
+    this.onChangeTodoName = this.onChangeTodoName.bind(this);
     this.onChangeTodoDescription = this.onChangeTodoDescription.bind(this);
-    this.onChangeTodoResponsible = this.onChangeTodoResponsible.bind(this);
+    this.onChangeTodoCategory = this.onChangeTodoCategory.bind(this);
     this.onChangeTodoPriority = this.onChangeTodoPriority.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
+      todo_name: '',
       todo_description: '',
-      todo_responsible: '',
+      todo_category: '',
       todo_priority: '',
       todo_completed: false
     }
+  }
+
+  onChangeTodoName(e) {
+    this.setState({
+      todo_name: e.target.value
+    });
   }
 
   onChangeTodoDescription(e) {
@@ -25,9 +33,9 @@ export default class CreateTodo extends Component {
     });
   }
 
-  onChangeTodoResponsible(e) {
+  onChangeTodoCategory(e) {
     this.setState({
-      todo_responsible: e.target.value
+      todo_category: e.target.value
     });
   }
 
@@ -41,13 +49,15 @@ export default class CreateTodo extends Component {
     e.preventDefault();
 
     console.log(`Form submitted:`);
+    console.log(`Todo Name: ${this.state.todo_name}`);
     console.log(`Todo Description: ${this.state.todo_description}`);
-    console.log(`Todo Responsible: ${this.state.todo_responsible}`);
+    console.log(`Todo Category: ${this.state.todo_category}`);
     console.log(`Todo Priority: ${this.state.todo_priority}`);
 
     const newTodo = {
+      todo_name: this.state.todo_name,
       todo_description: this.state.todo_description,
-      todo_responsible: this.state.todo_responsible,
+      todo_category: this.state.todo_category,
       todo_priority: this.state.todo_priority,
       todo_completed: this.state.todo_completed
     };
@@ -56,8 +66,9 @@ export default class CreateTodo extends Component {
         .then(res => console.log(res.data));
 
     this.setState({
+      todo_name: '',
       todo_description: '',
-      todo_responsible: '',
+      todo_category: '',
       todo_priority: '',
       todo_completed: false
     })
@@ -69,6 +80,14 @@ export default class CreateTodo extends Component {
           <h3>Create New Todo</h3>
           <form onSubmit={this.onSubmit}>
             <div className="form-group">
+              <label>Name: </label>
+              <input  type="text"
+                      className="form-control"
+                      value={this.state.todo_name}
+                      onChange={this.onChangeTodoName}
+                      />
+            </div>
+            <div className="form-group">
               <label>Description: </label>
               <input  type="text"
                       className="form-control"
@@ -77,12 +96,12 @@ export default class CreateTodo extends Component {
                       />
             </div>
             <div className="form-group">
-              <label>Responsible: </label>
+              <label>Category: </label>
               <input
                       type="text"
                       className="form-control"
-                      value={this.state.todo_responsible}
-                      onChange={this.onChangeTodoResponsible}
+                      value={this.state.todo_category}
+                      onChange={this.onChangeTodoCategory}
                       />
             </div>
             <div className="form-group">

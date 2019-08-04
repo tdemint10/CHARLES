@@ -28,6 +28,7 @@ app.get('/', (req, res) => {
 
 /* TODO ROUTES */
 todoRoutes.route('/').get((req, res) => {
+  console.log('LIST')
   Todo.find((err, todos) => {
     if (err) {
       console.log(err);
@@ -40,7 +41,11 @@ todoRoutes.route('/').get((req, res) => {
 todoRoutes.route('/:id').get((req, res) => {
   let id = req.params.id;
   Todo.findById(id, (err, todo) => {
-    res.json(todo);
+    if (!err) {
+      res.status(200).json(todo);
+    } else {
+      res.status(404).send('todo not found')
+    }
   });
 });
 
@@ -53,6 +58,20 @@ todoRoutes.route('/add').post((req, res) => {
     .catch(err => {
       res.status(400).send('adding new todo failed');
     });
+});
+
+todoRoutes.route('/:id').delete((req, res) => {
+  let id = req.params.id;
+  console.log('Server: DELETE');
+  console.log(id);
+  Todo.remove({_id: id}, (err) => {
+    if (!err) {
+      res.status(200).json({'todo': 'todo removed successfully'});
+    } else {
+      console.log(err);
+      res.status(400).json('removing todo failed');
+    }
+  });
 });
 
 /* SET PORT */

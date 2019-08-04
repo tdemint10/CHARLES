@@ -4,11 +4,15 @@ import axios from 'axios';
 
 const Todo = props => (
   <tr>
+    <td>{props.todo.todo_name}</td>
     <td>{props.todo.todo_description}</td>
-    <td>{props.todo.todo_responsible}</td>
+    <td>{props.todo.todo_category}</td>
     <td>{props.todo.todo_priority}</td>
     <td>
       <Link to={"/edit/"+props.todo._id}>Edit</Link>
+    </td>
+    <td>
+      <Link to={"/delete/"+props.todo._id}>Delete</Link>
     </td>
   </tr>
 )
@@ -23,8 +27,8 @@ export default class TodosList extends Component {
 
   componentDidMount() {
     axios.get('http://localhost:3001/todos')
-      .then(response => {
-        this.setState({ todos: response.data });
+      .then(res => {
+        this.setState({ todos: res.data });
       })
       .catch(function (error) {
         console.log(error);
@@ -38,16 +42,19 @@ export default class TodosList extends Component {
   }
 
   render() {
+    console.log('LIST');
     return (
       <div>
         <h3>Todos List</h3>
         <table className="table table-striped" style={{ marginTop: 20 }}>
           <thead>
             <tr>
+              <th>Name</th>
               <th>Description</th>
-              <th>Responsibility</th>
+              <th>Category</th>
               <th>Priority</th>
-              <th>Action</th>
+              <th>Edit</th>
+              <th>Delete</th>
             </tr>
           </thead>
           <tbody>
